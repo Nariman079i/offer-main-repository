@@ -8,5 +8,5 @@ urlpatterns = [
     path('api/v1/inn/<str:inn>/', get_inn_user),
     path('api/v1/profiles/', ProfileApiCreate.as_view()),
     path('api/v1/<str:role>/<int:limit>', ProfileApiView.as_view()),
-    path('media/img/')
+
 ]
