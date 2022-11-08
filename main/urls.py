@@ -1,4 +1,6 @@
+from django.conf.urls.static import static
 from django.urls import path, include
+from Offer.settings import *
 from main.views import *
 
 urlpatterns = [
@@ -9,4 +11,5 @@ urlpatterns = [
     path('api/v1/profiles/', ProfileApiCreate.as_view()),
     path('api/v1/<str:role>/<int:limit>', ProfileApiView.as_view()),
 
-]
+]+ static(MEDIA_URL, document_root=MEDIA_ROOT)
+
