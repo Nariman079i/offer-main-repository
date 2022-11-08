@@ -1,4 +1,5 @@
 from django.db.models import *
+from main.admin import *
 # Create your models here.
 class Profile(Model):
 
@@ -16,3 +17,4 @@ class Profile(Model):
     def __str__(self):
         return self.name
 
+admin.site.register(Profile)
