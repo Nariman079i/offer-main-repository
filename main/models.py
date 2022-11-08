@@ -2,9 +2,9 @@ from django.db.models import *
 # Create your models here.
 class Profile(Model):
 
-    role = (("investor", "investor"),
-            ("businessman", "businessman"),
-            ("company",'company'))
+    role = ((1, "Инвестор"),
+            (2, "Предприниматель"),
+            (3,'Компания'))
     name = CharField(max_length=30)
     img = ImageField(upload_to='img/')
     first_name = CharField(max_length=30)
