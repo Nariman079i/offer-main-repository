@@ -18,4 +18,5 @@ class Profile(Model):
     def __str__(self):
         return self.first_name.__str__() + self.last_name.__str__()
 
-admin.site.register(Profile)
+
+admin.site.register(Profile , ProfileAdmin)
