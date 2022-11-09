@@ -1,29 +1,12 @@
-from django.contrib.auth.models import User
-from rest_framework.fields import SerializerMethodField
 
+from main.serializers import *
 from main.models import *
 from django.shortcuts import render, HttpResponse
 from dadata import Dadata
 from json import *
-from rest_framework.serializers import ModelSerializer
 from rest_framework.generics import *
 from rest_framework.views import *
 from rest_framework.permissions import AllowAny
-# Create your views here.
-
-
-
-
-class UserSerializer(ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('username','email','password',)
-
-class ProfileSerialiser(ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ('img', 'first_name', 'last_name', 'industry','status', 'role')
-
 
 
 class ProfileApiCreate(ListAPIView, CreateAPIView):
@@ -31,14 +14,23 @@ class ProfileApiCreate(ListAPIView, CreateAPIView):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerialiser
 
-
 class ProfileApiView(ListAPIView):
     def get_queryset(self):
         role = self.kwargs.get('role')
         limit = self.kwargs.get('limit')
         return Profile.objects.filter(role=role)[:limit]
-
     serializer_class = ProfileSerialiser
+
+class ProfileApiList(ListAPIView):
+    def get_queryset(self):
+        role = self.kwargs.get('role')
+        return Profile.objects.filter(role=role)
+    serializer_class = ProfileSerialiser
+
+
+
+
+
 class UserApiList(ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -46,6 +38,10 @@ class UserApiList(ListAPIView):
 class UserRegistrationList(ListAPIView, CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+
+
+
 
 class UserLoginApi(APIView):
     def get(self,request):
