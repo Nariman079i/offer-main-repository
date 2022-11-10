@@ -11,4 +11,4 @@ class UserSerializer(ModelSerializer):
 class ProfileSerialiser(ModelSerializer):
     class Meta:
         model = Profile
-        fields = ('img', 'first_name', 'last_name', 'industry','locate','status', 'role')
+        fields = ('id','img', 'first_name', 'last_name', 'industry','locate','status', 'role')
