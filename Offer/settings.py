@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
+    'econo.apps.EconoConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
