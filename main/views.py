@@ -6,11 +6,17 @@ from dadata import Dadata
 from json import *
 from rest_framework.generics import *
 from rest_framework.views import *
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import *
+
+
+class FullProfileCreate(CreateAPIView, ListAPIView):
+    queryset = TestProfile.objects.all()
+    serializer_class = TestSerializer
+    permission_classes = (IsAuthenticated,)
 
 
 class ProfileApiCreate(ListAPIView, CreateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
     queryset = Profile.objects.all()
     serializer_class = ProfileSerialiser
 

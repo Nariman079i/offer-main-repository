@@ -6,6 +6,5 @@ urlpatterns = [
     path('get/inc/' , GetIncome.as_view()),
     path('post/exp/' , CreateExpense.as_view()),
     path('post/inc/' , CreateIncome.as_view()),
-
 ]
 
