@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
 from django.shortcuts import render
@@ -16,13 +16,7 @@ from offer_start.models import Investor , Bussinessmen, Company
 
 class UserSerializer(ModelSerializer):
     username = CharField(max_length=255, allow_blank=True , allow_null=False)
-    email = EmailField(
-        max_length=255,
-        allow_blank=True,
-        allow_null=False,
-        validators=[EmailValidator(message="Недействительный адрес почты", code="invalid"),]
-    )
-
+    email = EmailField(max_length=255, allow_blank=True, allow_null=False)
     password = CharField(max_length=255, allow_null=False, allow_blank=True)
 
     class Meta:
@@ -34,25 +28,9 @@ class UserSerializer(ModelSerializer):
             'email':{'blank':True}
         }
 
-    def validate_username(self, value):
-        if len(value) == 0:
-            raise ValidationError('Поле не может быть пустым')
-        return value
-
-    def validate_email(self, value):
-        if len(value) == 0:
-            raise ValidationError('Поле не может быть пустым')
-        if "@" not in value:
-            raise ValidationError("Недействительный адрес")
-        return value
-    def validate_password(self, value):
-        if len(value) == 0:
-            raise ValidationError('Поле не может быть пустым')
-        return value
-
     def create(self, validated_data):
         if User.objects.filter(username=validated_data['username']).exists():
-            raise ValidationError({"username":"Пользователя с таким именем уже существует"})
+            raise ValidationError({"username":["Пользователь с таким именем уже существует"]})
 
 
         user = User(
@@ -86,6 +64,7 @@ class CompanySerializerList(ModelSerializer):
 
 
 
+
 class InvestorSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
 
@@ -105,11 +84,13 @@ class BussinessmenSerializer(ModelSerializer):
         fields = '__all__'
 
 class CompanySerializer(ModelSerializer):
-    user = HiddenField(default=CurrentUserDefault())
+
 
     class Meta:
         model = Company
         fields = '__all__'
+
+
 
 #Serializers End line !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -123,11 +104,13 @@ class UserGetToken(APIView):
             password=password
                             )
         if user:
+
             return Response({
+
                 'auth_token':user.auth_token.key
             })
         else:
-            return Response({'error':'error'})
+            return Response({'error':['Неправильно введен пароль']})
 
 #Views Start Line !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 class CreateBussinessmen(CreateAPIView):
