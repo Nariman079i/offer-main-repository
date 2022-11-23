@@ -5,50 +5,56 @@ from django.contrib.auth.models import User
 class Investor(Model):
 
     user = OneToOneField(User, on_delete=CASCADE , related_name='investor')
-    inn = CharField(max_length=12)
-    call_number = CharField(max_length=60)
-    name = CharField(max_length=60)
-    surname = CharField(max_length=60)
-    birth_date = DateField()
+    inn = CharField(max_length=12, blank=True, null=False )
+    call_number = CharField(max_length=60, blank=True, null=False)
 
-    locate = CharField(max_length=255)
-    industry = CharField(max_length=255)
-    sub_industry = CharField(max_length=255)
+    avatar = ImageField(upload_to='img/', null=True)
 
-    status = CharField(max_length=60)
-    gender = CharField(max_length=12)
+    name = CharField(max_length=60, blank=True, null=False)
+    surname = CharField(max_length=60, blank=True, null=False)
+    birth_date = DateField(blank=True, null=False)
+
+    locate = CharField(max_length=255, blank=True, null=False)
+    industry = CharField(max_length=255, blank=True, null=False)
+    sub_industry = CharField(max_length=255, blank=True, null=False)
+
+    status = CharField(max_length=60, blank=True, null=False)
+    gender = CharField(max_length=12, blank=True, null=False)
 
 
 class Bussinessmen(Model):
 
     user = OneToOneField(User, on_delete=CASCADE, related_name='bussinessmen')
 
-    inn = CharField(max_length=12)
-    call_number = CharField(max_length=60)
-    name = CharField(max_length=60)
-    surname = CharField(max_length=60)
-    birth_date = DateField()
+    avatar = ImageField(upload_to='img/', null=True)
 
-    locate = CharField(max_length=255)
-    industry = CharField(max_length=255)
-    sub_industry = CharField(max_length=255)
+    inn = CharField(max_length=12, blank=True, null=False)
+    call_number = CharField(max_length=60, blank=True, null=False)
+    name = CharField(max_length=60, blank=True, null=False)
+    surname = CharField(max_length=60, blank=True, null=False)
+    birth_date = DateField( blank=True, null=False)
 
-    status = CharField(max_length=60)
-    gender = CharField(max_length=12)
+    locate = CharField(max_length=255, blank=True, null=False)
+    industry = CharField(max_length=255, blank=True, null=False)
+    sub_industry = CharField(max_length=255, blank=True, null=False)
+
+    status = CharField(max_length=60, blank=True, null=False)
+    gender = CharField(max_length=12, blank=True, null=False)
 
 
 class Company(Model):
     user = OneToOneField(User, on_delete=CASCADE , related_name='company')
 
-    inn = CharField(max_length=12)
-    call_number = CharField(max_length=60)
-    name = CharField(max_length=60)
+    avatar = ImageField(upload_to='img/',null=True)
 
-    create_date = DateField()
-    url = CharField(max_length=255)
-    locate = CharField(max_length=255)
-    industry = CharField(max_length=255)
+    inn = CharField(max_length=12, blank=True, null=False)
+    call_number = CharField(max_length=60, blank=True, null=False)
+    name = CharField(max_length=60, blank=True, null=False)
 
+    create_date = DateField( blank=True, null=False)
+    url = CharField(max_length=255, blank=True, null=False)
+    locate = CharField(max_length=255, blank=True, null=False)
+    industry = CharField(max_length=255, blank=True, null=False)
 
-    status = CharField(max_length=60)
-    about = CharField(max_length=500)
+    status = CharField(max_length=60, blank=True, null=False)
+    about = CharField(max_length=500, blank=True, null=False)
