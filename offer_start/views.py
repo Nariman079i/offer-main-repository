@@ -24,6 +24,7 @@ class UserSerializer(ModelSerializer):
     )
 
     password = CharField(max_length=255, allow_null=False, allow_blank=True)
+
     class Meta:
         model = User
         fields = ('username', 'email','password')
@@ -63,6 +64,18 @@ class UserSerializer(ModelSerializer):
         Token.objects.create(user=user)
         return user
 
+class UserSerializerPass(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('username' , 'email')
+
+
+class InvestorSerializerList(ModelSerializer):
+    user = UserSerializerPass(read_only=True)
+
+    class Meta:
+        model = Investor
+        fields = '__all__'
 
 
 class InvestorSerializer(ModelSerializer):
@@ -151,3 +164,9 @@ class CreateInvestor(CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
 
+
+class InvestorListAPI(ListAPIView):
+    queryset = Investor.objects.all()
+    serializer_class = InvestorSerializerList
+
+    permission_classes = (IsAuthenticated,)

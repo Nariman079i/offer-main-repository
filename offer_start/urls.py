@@ -9,6 +9,7 @@ urlpatterns = [
     path('create/user/inv/',CreateInvestor.as_view()),
     path('create/user/bus/',CreateBussinessmen.as_view()),
     path('create/user/com/',CreateCompany.as_view()),
+    path('list/inv/', InvestorListAPI.as_view()),
     path('get/token/', UserGetToken.as_view()),
     path('auth/', include('djoser.urls')),
     re_path('auth/', include('djoser.urls.authtoken'))
