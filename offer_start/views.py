@@ -77,6 +77,14 @@ class InvestorSerializerList(ModelSerializer):
         model = Investor
         fields = '__all__'
 
+class CompanySerializerList(ModelSerializer):
+    user = UserSerializerPass(read_only=True)
+
+    class Meta:
+        model = Company
+        fields = '__all__'
+
+
 
 class InvestorSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
@@ -86,31 +94,7 @@ class InvestorSerializer(ModelSerializer):
         fields = '__all__'
 
 
-    def validate_inn(self, value):
-        if len(value) > 12:
-            raise ValidationError('Длина поля не может быть больше 12 чисел')
-        if len(value) == 0:
-            raise ValidationError('Поле не может быть пустым')
-        try :
-            for i in value:
-                с = int(i)
-                print(с)
-        except:
-            raise ValidationError('Поле должно состоять только из цифр')
-        return value
 
-    def validate_call_number(self, value):
-        if len(value) > 12:
-            raise ValidationError('Длина поля не может быть больше 12 чисел')
-        if len(value) == 0:
-            raise ValidationError('Поле не может быть пустым')
-        try :
-            for i in value:
-                с = int(i)
-                print(с)
-        except:
-            raise ValidationError('Поле должно состоять только из цифр')
-        return value
 
 
 class BussinessmenSerializer(ModelSerializer):
@@ -169,4 +153,10 @@ class InvestorListAPI(ListAPIView):
     queryset = Investor.objects.all()
     serializer_class = InvestorSerializerList
 
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
+
+class CompanyListAPI(ListAPIView):
+    queryset = Company.objects.all()
+    serializer_class = CompanySerializerList
+
+    permission_classes = (AllowAny,)
