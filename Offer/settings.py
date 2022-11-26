@@ -147,6 +147,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES':[
+        'rest_framework.permissions.AllowAny'
     ]
 }
 
@@ -156,6 +159,7 @@ DJOSER = {
     'SERIALIZERS': {
         'user_create': 'offer_start.serializers.UserSerializer'
     }
+
 
 }
 

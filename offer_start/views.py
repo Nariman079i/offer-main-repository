@@ -3,7 +3,7 @@ from rest_framework.viewsets import GenericViewSet
 
 from offer_start.serializers import *
 from rest_framework import mixins
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated ,AllowAny
 from offer_start.models import *
 
 
