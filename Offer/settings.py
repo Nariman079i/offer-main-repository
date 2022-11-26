@@ -33,19 +33,16 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main.apps.MainConfig',
-    'econo.apps.EconoConfig',
-    'clean.apps.CleanConfig',
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'todoapp',
     'offer_start.apps.OfferStartConfig',
     'corsheaders'
 ]
@@ -89,10 +86,10 @@ CORS_ALLOW_ALL_ORIGINS = True
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7hq7ll6ievokp',
-        'USER': 'quwcyemxjfsbqd',
-        'PASSWORD': '0f09000eb176ab37f891178f190b75395d90e2020933b7dd650a124ead64683b',
-        'HOST': 'ec2-52-18-201-153.eu-west-1.compute.amazonaws.com',
+        'NAME': 'deel1n69atskbj',
+        'USER': 'tmbsizqvupwjtz',
+        'PASSWORD': 'a87071f9814f0b6c21a429fd3dd485411488a4a8f9f9fdfd74940ca7c16caf51',
+        'HOST': 'ec2-63-32-248-14.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -100,7 +97,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
-
+AUTH_USER_MODEL = 'users.CustomUser'
 AUTH_PASSWORD_VALIDATORS = [
     # {
     #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -150,8 +147,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.BasicAuthentication',
-        # 'rest_framework.authentication.SessionAuthentication',
-
     ]
 }
 

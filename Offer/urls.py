@@ -7,10 +7,7 @@ from Offer import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls')),
-    path('', include('econo.urls')),
     path('offer/', include('offer_start.urls')),
-    path('clean/', include('clean.urls')),
     path('auth/', include('djoser.urls')),
     re_path('auth/', include('djoser.urls.authtoken'))
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

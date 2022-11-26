@@ -1,50 +1,41 @@
 
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-
-from django.shortcuts import render ,HttpResponse
-from django.core.validators import EmailValidator
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import *
 from rest_framework.response import Response
 from rest_framework.serializers import *
 from rest_framework.views import APIView
 from rest_framework.permissions import *
+from users.models import *
+from djoser.serializers import UserCreateSerializer
 # Create your views here.
 from offer_start.models import Investor , Bussinessmen, Company
 
+User = CustomUser
 #Seiralizer Start Line !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-class UserSerializer(ModelSerializer):
-    username = CharField(max_length=255, allow_blank=True , allow_null=False, required=False)
-    email = EmailField(max_length=255, allow_blank=True, allow_null=False)
-    password = CharField(max_length=255, allow_null=False, allow_blank=True)
-
-    class Meta:
+class UserSerializer(UserCreateSerializer):
+    class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ('username', 'email','password')
-        extra_kwargs = {
-            'username':{'blank':True},
-            'password': {'write_only': True},
-            'email':{'blank':True}
-        }
+        fields = ('email','password')
 
     def create(self, validated_data):
-        if User.objects.filter(email=validated_data['email']).exists():
-            raise ValidationError({"username":["Пользователь с такой почтой уже существует"]})
-
-
-        user = User(email = validated_data['email'])
-        user.set_password(validated_data['password'])
+        email = validated_data.get('email')
+        password = validated_data.get('password')
+        user = User.objects.create_user(email=email)
+        user.set_password(password)
         user.save()
         Token.objects.create(user=user)
+
         return user
+
 
 class UserSerializerPass(ModelSerializer):
     class Meta:
         model = User
-        fields = ('username' , 'email')
+        fields = ( 'email',)
 
 
 class InvestorSerializerList(ModelSerializer):
