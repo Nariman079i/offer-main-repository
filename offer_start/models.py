@@ -58,3 +58,18 @@ class Company(Model):
 
     status = CharField(max_length=60, blank=True, null=False)
     about = CharField(max_length=500, blank=True, null=False)
+
+class Image(Model):
+    title = CharField(max_length=60, null=True)
+    img = ImageField(upload_to='details/')
+
+class Service(Model):
+    title = CharField(max_length=60)
+    img = ForeignKey(Image, on_delete=PROTECT, null=True, related_name='image')
+    service_type = ForeignKey('ServiceType', on_delete=CASCADE , related_name='type')
+
+class ServiceType(Model):
+    code = CharField(max_length=20)
+    title = CharField(max_length=255)
+
+

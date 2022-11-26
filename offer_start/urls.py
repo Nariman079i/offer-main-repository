@@ -11,8 +11,10 @@ urlpatterns = [
     path('create/user/com/',CreateCompany.as_view()),
     path('list/inv/', InvestorListAPI.as_view()),
     path('list/com/', CompanyListAPI.as_view()),
+    path('list/bus/', BussinessmenListAPI.as_view()),
+    path('edit/com/<int:pk>/', CompanyEditAPI.as_view()),
     path('get/token/', UserGetToken.as_view()),
-    path('auth/', include('djoser.urls')),
-    re_path('auth/', include('djoser.urls.authtoken'))
+
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

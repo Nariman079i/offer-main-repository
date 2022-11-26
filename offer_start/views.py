@@ -1,7 +1,9 @@
+
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
-from django.shortcuts import render
+from django.shortcuts import render ,HttpResponse
 from django.core.validators import EmailValidator
 from rest_framework.authtoken.models import Token
 from rest_framework.generics import *
@@ -15,7 +17,7 @@ from offer_start.models import Investor , Bussinessmen, Company
 #Seiralizer Start Line !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 class UserSerializer(ModelSerializer):
-    username = CharField(max_length=255, allow_blank=True , allow_null=False)
+    username = CharField(max_length=255, allow_blank=True , allow_null=False, required=False)
     email = EmailField(max_length=255, allow_blank=True, allow_null=False)
     password = CharField(max_length=255, allow_null=False, allow_blank=True)
 
@@ -29,14 +31,11 @@ class UserSerializer(ModelSerializer):
         }
 
     def create(self, validated_data):
-        if User.objects.filter(username=validated_data['username']).exists():
-            raise ValidationError({"username":["Пользователь с таким именем уже существует"]})
+        if User.objects.filter(email=validated_data['email']).exists():
+            raise ValidationError({"username":["Пользователь с такой почтой уже существует"]})
 
 
-        user = User(
-            email = validated_data['email'],
-            username = validated_data['username']
-                    )
+        user = User(email = validated_data['email'])
         user.set_password(validated_data['password'])
         user.save()
         Token.objects.create(user=user)
@@ -62,7 +61,12 @@ class CompanySerializerList(ModelSerializer):
         model = Company
         fields = '__all__'
 
+class BussinessmenSerializerList(ModelSerializer):
+    user = UserSerializerPass(read_only=True)
 
+    class Meta:
+        model = Bussinessmen
+        fields = '__all__'
 
 
 class InvestorSerializer(ModelSerializer):
@@ -72,10 +76,6 @@ class InvestorSerializer(ModelSerializer):
         model = Investor
         fields = '__all__'
 
-
-
-
-
 class BussinessmenSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
 
@@ -84,8 +84,7 @@ class BussinessmenSerializer(ModelSerializer):
         fields = '__all__'
 
 class CompanySerializer(ModelSerializer):
-
-
+    user = HiddenField(default=CurrentUserDefault())
     class Meta:
         model = Company
         fields = '__all__'
@@ -131,6 +130,12 @@ class CreateInvestor(CreateAPIView):
 
     permission_classes = (IsAuthenticated,)
 
+class CreateBussinessmen(ListAPIView):
+    queryset = Bussinessmen
+    serializer_class = BussinessmenSerializer
+
+    permission_classes = (IsAuthenticated)
+
 
 class InvestorListAPI(ListAPIView):
     queryset = Investor.objects.all()
@@ -143,3 +148,21 @@ class CompanyListAPI(ListAPIView):
     serializer_class = CompanySerializerList
 
     permission_classes = (AllowAny,)
+
+class BussinessmenListAPI(ListAPIView):
+    queryset = Bussinessmen.objects.all()
+    serializer_class = BussinessmenSerializerList
+
+    permission_classes = (AllowAny,)
+
+class CompanyEditAPI(ListAPIView,UpdateAPIView):
+    serializer_class = CompanySerializer
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        return Company.objects.filter(pk=pk)
+
+    permission_classes = (IsAuthenticated,)
+
+
+
