@@ -140,7 +140,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 REST_FRAMEWORK = {
-'DEFAULT_PERMISSION_CLASSES': [
+     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
 ],
     'DEFAULT_RENDERER_CLASSES': [
@@ -148,8 +148,9 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.BrowsableAPIRenderer'],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
     ],
 
 }
@@ -158,7 +159,7 @@ REST_FRAMEWORK = {
 
 DJOSER = {
     'SERIALIZERS': {
-        'user_create': 'offer_start.serializers.UserSerializer'
+        'user_create': 'users.serializers.UserSerializer'
     }
 
 

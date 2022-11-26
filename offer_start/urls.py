@@ -8,7 +8,7 @@ router = DefaultRouter()
 router.register(r'investor', CreateInvestor)
 router.register(r'businessman', CreateBusinessman)
 router.register(r'company', CreateCompany)
-print(router.urls)
+
 urlpatterns = [
     path('create/', include(router.urls))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
