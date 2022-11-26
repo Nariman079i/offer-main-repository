@@ -28,6 +28,8 @@ class CreateCompany(mixins.CreateModelMixin,
                     GenericViewSet):
     serializer_class = CompanySerializer
     queryset = Company.objects.all()
+
+    permission_classes = (IsAuthenticated,)
 """
 Исправить ошибку с Bussinessmen
 """
