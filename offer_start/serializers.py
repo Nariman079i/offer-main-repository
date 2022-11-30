@@ -1,6 +1,15 @@
 
 from rest_framework.serializers import *
 from offer_start.models import *
+from users.serializers import UserSerializer
+
+
+class ProfileInvestorSerializer(ModelSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Investor
+        fields = ('user','name','surname','avatar')
 
 class InvestorSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
@@ -11,7 +20,7 @@ class InvestorSerializer(ModelSerializer):
 class BusinessmanSerializer(ModelSerializer):
     user = HiddenField(default=CurrentUserDefault())
     class Meta:
-        model = Bussinessmen
+        model = Businessman
         fields = "__all__"
 
 class CompanySerializer(ModelSerializer):
