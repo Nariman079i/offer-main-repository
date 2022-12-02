@@ -13,6 +13,7 @@ user.register(r'company', CreateCompany)
 
 urlpatterns = [
     path('create/', include(user.urls)),
+    path('create/user/', UserCreate.as_view()),
     path('person/', PersonAccountApi.as_view()),
 
     path('list/investor/', InvestorList.as_view()),

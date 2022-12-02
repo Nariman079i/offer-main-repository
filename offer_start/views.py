@@ -67,3 +67,9 @@ class CompanyListLimit(ListAPIView):
 class CompanyList(ListAPIView):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+class UserCreate(CreateAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSerializer
+
+    permission_classes = [AllowAny,]

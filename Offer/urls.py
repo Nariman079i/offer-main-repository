@@ -10,7 +10,8 @@ urlpatterns = [
     path('offer/', include('offer_start.urls')),
     path('auth/', include('djoser.urls')),
     re_path('auth/', include('djoser.urls.authtoken')),
-    path('send/', email_confirmation.views.send)
+    path('send/', email_confirmation.views.send),
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
