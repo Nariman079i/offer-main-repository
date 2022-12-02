@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'offer_start.apps.OfferStartConfig',
-    'corsheaders'
+    'corsheaders',
+    'email_confirmation'
 ]
 
 MIDDLEWARE = [
@@ -155,13 +156,21 @@ REST_FRAMEWORK = {
 
 }
 
+EMAIL_HOST = 'smtp.mail.ru'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = "offer.start@mail.ru"
+EMAIL_HOST_PASSWORD = "EQtq3zRetN46ryTBVgSr"
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 
 
 DJOSER = {
     'SERIALIZERS': {
         'user_create': 'users.serializers.UserSerializer'
+    },
+    'PERMISSIONS':{
+        'user_create':['rest_framework.permissions.AllowAny',]
     }
-
 
 }
 

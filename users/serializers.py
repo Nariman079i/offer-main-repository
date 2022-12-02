@@ -1,6 +1,7 @@
 from rest_framework.authtoken.models import Token
 from users.models import CustomUser
 from djoser.serializers import UserCreateSerializer
+from djoser.views import User
 
 User = CustomUser
 
@@ -16,5 +17,5 @@ class UserSerializer(UserCreateSerializer):
         user = User.objects.create_user(email=email)
         user.set_password(password)
         user.save()
-        Token.objects.create(user=user)
+
         return user
